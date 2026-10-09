@@ -1,0 +1,18 @@
+# Visita o banco a cada 3 dias para o Supabase gratuito não pausar o projeto.
+# Precisa de dois "secrets" no repositório do GitHub:
+#   SUPABASE_URL  e  SUPABASE_KEY  (os mesmos valores colados no index.html)
+name: Manter as brisas acordadas
+
+on:
+  schedule:
+    - cron: "17 11 */3 * *"
+  workflow_dispatch:
+
+jobs:
+  visitar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ler uma pergunta
+        run: |
+          curl --fail -sS "${{ secrets.SUPABASE_URL }}/rest/v1/perguntas?select=id&limit=1" \
+            -H "apikey: ${{ secrets.SUPABASE_KEY }}"
