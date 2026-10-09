@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>brisas</title>
+<meta name="description" content="Um acervo coletivo de perguntas sem resposta. Solta a sua brisa, brisa junto na dos outros.">
+<meta property="og:title" content="brisas">
+<meta property="og:description" content="Solta a sua brisa. Brisa junto na dos outros.">
+<meta name="theme-color" content="#f7f6f3">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M20 60c10-40 50-50 60-20s-40 40-30 10 40-20 30 20' fill='none' stroke='%23ff4fa3' stroke-width='12' stroke-linecap='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fundo: #f7f6f3;
+    --branco: #ffffff;
+    --tinta: #141414;
+    --tinta-suave: #5c5a55;
+    --rosa: #ff4fa3;
+    --azul: #3d5cff;
+    --amarelo: #ffd400;
+    --verde: #18c27a;
+    --laranja: #ff6a2b;
+    --roxo: #9b5cff;
+    --ciano: #22c3e6;
+    --borda: 2px solid var(--tinta);
+    --sombra: 5px 5px 0 var(--tinta);
+    --sans: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --mao: "Caveat", "Comic Sans MS", cursive;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--fundo); color: var(--tinta); font-family: var(--sans); font-size: 18px; line-height: 1.4; overflow-x: hidden; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  .pagina { position: relative; z-index: 1; max-width: 1140px; margin: 0 auto; padding: 0 16px 80px; }
+  .so-leitor { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .mel { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  /* Camada de rabiscos */
+  #rabiscos { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; }
+  #rabiscos path { fill: none; stroke-linecap: round; stroke-linejoin: round; transition: opacity 1.6s ease; }
+  #rabiscos path.sumindo { opacity: 0; }
+
+  /* Topo */
+  header { min-height: 82vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 0 24px; }
+  .chapeu { font-family: var(--mao); font-size: 26px; color: var(--tinta-suave); transform: rotate(-2deg); }
+  h1 { font-weight: 800; font-size: clamp(96px, 24vw, 260px); line-height: .82; letter-spacing: -.055em; margin: 8px 0 18px; position: relative; }
+  h1 .sublinha { position: absolute; left: -4%; right: -4%; bottom: -10%; width: 108%; height: 40%; overflow: visible; }
+  h1 .sublinha path { fill: none; stroke: var(--rosa); stroke-width: 10; stroke-linecap: round; stroke-dasharray: 1400; stroke-dashoffset: 1400; animation: desenhar 1.4s .3s ease forwards; }
+  @keyframes desenhar { to { stroke-dashoffset: 0; } }
+  .lema { max-width: 30ch; margin: 18px auto 34px; font-size: clamp(19px, 2.4vw, 24px); }
+  .lema b { background: var(--amarelo); padding: 0 4px; font-weight: 600; }
+
+  .segura-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .segura {
+    width: 132px; height: 132px; border-radius: 50%; border: var(--borda); background: var(--rosa); color: var(--tinta);
+    box-shadow: var(--sombra); font-weight: 800; font-size: 22px; letter-spacing: -.02em; cursor: pointer;
+    touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
+    transition: transform .12s ease, box-shadow .12s ease, background .3s;
+  }
+  .segura:active, .segura.segurando { transform: translate(4px, 4px) scale(.96); box-shadow: 1px 1px 0 var(--tinta); }
+  .segura-dica { font-family: var(--mao); font-size: 24px; color: var(--tinta-suave); }
+  .seta { font-family: var(--mao); font-size: 22px; margin-top: 34px; color: var(--tinta-suave); animation: boia 2.4s ease-in-out infinite; }
+  @keyframes boia { 50% { transform: translateY(6px); } }
+
+  .aviso-demo { margin: 0 auto 28px; max-width: 720px; padding: 10px 14px; border: 2px dashed var(--tinta); border-radius: 14px; background: var(--branco); font-size: 14px; text-align: center; }
+
+  /* Formulário principal */
+  .soltar {
+    max-width: 760px; margin: 0 auto 64px; background: var(--branco); border: var(--borda); border-radius: 26px;
+    box-shadow: 8px 8px 0 var(--tinta); padding: 34px 28px 22px; position: relative;
+  }
+  .adesivo {
+    position: absolute; top: -20px; left: 22px; background: var(--amarelo); border: var(--borda); border-radius: 999px;
+    padding: 4px 16px; font-weight: 800; font-size: 15px; transform: rotate(-3deg);
+  }
+  textarea {
+    width: 100%; border: 0; background: transparent; resize: vertical; outline: none;
+    font-weight: 600; font-size: clamp(24px, 3.4vw, 34px); line-height: 1.15; letter-spacing: -.02em; min-height: 110px; padding: 4px 0;
+  }
+  textarea::placeholder { color: #b5b2aa; }
+  .linha-form { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; margin-top: 14px; }
+  .campo { display: flex; flex-direction: column; gap: 4px; flex: 1 1 170px; }
+  .campo label { font-family: var(--mao); font-size: 21px; line-height: 1; }
+  .campo input, .campo select {
+    border: var(--borda); border-radius: 14px; background: var(--fundo); padding: 10px 12px; min-height: 46px; font-size: 16px;
+  }
+  .campo input:focus, .campo select:focus, textarea:focus-visible { outline: 3px solid var(--azul); outline-offset: 2px; }
+  .botao {
+    border: var(--borda); border-radius: 999px; background: var(--tinta); color: var(--branco); padding: 10px 22px; min-height: 46px;
+    font-weight: 800; font-size: 17px; cursor: pointer; box-shadow: 3px 3px 0 var(--rosa); transition: transform .1s, box-shadow .1s, background .2s;
+  }
+  .botao:hover { background: var(--azul); }
+  .botao:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--rosa); }
+  .botao:disabled { opacity: .5; cursor: wait; }
+  .botao.claro { background: var(--branco); color: var(--tinta); box-shadow: 3px 3px 0 var(--tinta); }
+  .botao.claro:hover { background: var(--verde); }
+  .rodape-form { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 10px; min-height: 28px; }
+  .mensagem { margin: 0; font-family: var(--mao); font-size: 23px; line-height: 1.1; }
+  .contador { font-size: 13px; color: var(--tinta-suave); margin-left: auto; }
+  .contador.alerta { color: var(--laranja); font-weight: 800; }
+
+  /* Filtros */
+  .barra { display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: center; justify-content: space-between; margin-bottom: 30px; }
+  .titulo-acervo { font-weight: 800; font-size: clamp(36px, 6vw, 58px); letter-spacing: -.04em; margin: 0; line-height: 1; }
+  .titulo-acervo span { font-family: var(--mao); font-weight: 600; font-size: .5em; letter-spacing: 0; color: var(--tinta-suave); margin-left: 6px; }
+  .temas { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; }
+  .tema {
+    border: var(--borda); border-radius: 999px; background: var(--branco); padding: 6px 14px; cursor: pointer; font-weight: 600; font-size: 15px;
+    transition: transform .1s;
+  }
+  .tema:hover { transform: rotate(-2deg) scale(1.04); }
+  .tema[aria-pressed="true"] { background: var(--cor, var(--tinta)); color: var(--tinta); box-shadow: 3px 3px 0 var(--tinta); }
+  .tema[data-tema="todas"][aria-pressed="true"] { background: var(--tinta); color: var(--branco); }
+  .ordem { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .ordem select { border: var(--borda); border-radius: 999px; background: var(--branco); padding: 8px 12px; font-weight: 600; font-size: 15px; min-height: 42px; }
+
+  /* Acervo */
+  .acervo { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 26px; }
+  .brisa {
+    position: relative; text-align: left; width: 100%; cursor: pointer; display: flex; flex-direction: column; gap: 14px;
+    background: var(--branco); border: var(--borda); border-radius: 22px; box-shadow: var(--sombra); padding: 18px 18px 14px;
+    transform: rotate(var(--giro, 0deg)); transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .brisa:hover, .brisa:focus-visible { transform: rotate(0) translate(-3px, -3px); box-shadow: 9px 9px 0 var(--cor, var(--tinta)); outline: none; }
+  .brisa:focus-visible { outline: 3px solid var(--azul); outline-offset: 4px; }
+  .brisa-topo { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 13px; }
+  .chip { background: var(--cor); border: var(--borda); border-radius: 999px; padding: 2px 10px; font-weight: 600; }
+  .numero { font-family: var(--mao); font-size: 20px; color: var(--tinta-suave); }
+  .brisa .texto { font-weight: 600; font-size: 23px; line-height: 1.15; letter-spacing: -.015em; flex: 1; }
+  .brisa-pe { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; color: var(--tinta-suave); border-top: 2px dashed #dedbd3; padding-top: 10px; }
+  .brisa-pe .juntos { color: var(--tinta); font-weight: 600; white-space: nowrap; }
+  .vazio { grid-column: 1 / -1; text-align: center; font-family: var(--mao); font-size: 30px; color: var(--tinta-suave); padding: 48px 0; }
+
+  /* Ficha */
+  dialog {
+    width: min(760px, calc(100vw - 20px)); max-height: calc(100dvh - 20px); padding: 0; overflow: auto;
+    border: var(--borda); border-radius: 26px; background: var(--fundo); color: var(--tinta); box-shadow: 10px 10px 0 var(--tinta);
+  }
+  dialog::backdrop { background: rgba(247, 246, 243, .75); backdrop-filter: blur(6px); }
+  .ficha { padding: 26px 28px 30px; }
+  .ficha-topo { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .fechar { width: 44px; height: 44px; border-radius: 50%; border: var(--borda); background: var(--branco); cursor: pointer; font-size: 22px; line-height: 1; font-weight: 800; }
+  .fechar:hover { background: var(--rosa); }
+  .ficha h2 { font-weight: 800; font-size: clamp(30px, 5.4vw, 46px); line-height: 1.02; letter-spacing: -.035em; margin: 18px 0 10px; }
+  .coleta { font-family: var(--mao); font-size: 22px; color: var(--tinta-suave); margin-bottom: 26px; }
+  .ramos { list-style: none; padding: 0; margin: 0 0 28px; display: flex; flex-direction: column; gap: 14px; }
+  .ramos li { background: var(--branco); border: var(--borda); border-radius: 18px; padding: 12px 16px; margin-left: 24px; position: relative; }
+  .ramos li::before { content: "↳"; position: absolute; left: -26px; top: 8px; font-weight: 800; font-size: 22px; }
+  .ramos .tipo { display: inline-block; font-size: 13px; font-weight: 600; background: var(--cor, var(--amarelo)); border: var(--borda); border-radius: 999px; padding: 1px 10px; }
+  .ramos p { margin: 8px 0 4px; font-weight: 600; font-size: 20px; line-height: 1.2; letter-spacing: -.01em; }
+  .ramos small { color: var(--tinta-suave); font-size: 13px; }
+  .ramos-vazio { font-family: var(--mao); font-size: 25px; color: var(--tinta-suave); margin: 0 0 26px; }
+  .junto { background: var(--branco); border: var(--borda); border-radius: 22px; padding: 20px; position: relative; margin-top: 12px; }
+  .junto .adesivo { background: var(--verde); }
+  .junto .ajuda { margin: 8px 0 14px; color: var(--tinta-suave); font-size: 16px; }
+  .tipos { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+  .tipos label { cursor: pointer; position: relative; }
+  .tipos input { position: absolute; opacity: 0; pointer-events: none; }
+  .tipos span { display: inline-block; border: var(--borda); border-radius: 999px; padding: 6px 14px; font-weight: 600; font-size: 15px; background: var(--fundo); transition: transform .1s; }
+  .tipos span:hover { transform: rotate(-2deg); }
+  .tipos input:checked + span { background: var(--cor); box-shadow: 3px 3px 0 var(--tinta); }
+  .tipos input:focus-visible + span { outline: 3px solid var(--azul); outline-offset: 2px; }
+  .junto textarea { font-size: 24px; min-height: 80px; }
+
+  footer { text-align: center; margin-top: 80px; font-family: var(--mao); font-size: 24px; color: var(--tinta-suave); }
+
+  @media (max-width: 560px) {
+    body { font-size: 17px; }
+    header { min-height: 88vh; }
+    .soltar { padding: 30px 18px 18px; border-radius: 22px; }
+    .ficha { padding: 20px 16px 24px; }
+    .segura { width: 118px; height: 118px; font-size: 20px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    h1 .sublinha path { animation: none; stroke-dashoffset: 0; }
+    .seta { animation: none; }
+    .brisa, .tema, .tipos span { transition: none; }
+  }
+</style>
+</head>
+<body>
+<svg id="rabiscos" aria-hidden="true"></svg>
+
+<div class="pagina">
+  <header>
+    <div class="chapeu">um acervo coletivo de perguntas sem resposta</div>
+    <h1>brisas
+      <svg class="sublinha" viewBox="0 0 600 100" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M10 60 C 120 20, 200 90, 300 55 S 480 20, 590 50 C 520 70, 380 85, 250 78"/>
+      </svg>
+    </h1>
+    <p class="lema">Aquela pergunta que aparece no banho, no trânsito, às 3 da manhã. <b>Solta ela aqui.</b> E se bater a de alguém, brisa junto.</p>
+    <div class="segura-wrap">
+      <button class="segura" id="segura" type="button" aria-label="Segure para encher a tela de rabiscos">segura</button>
+      <span class="segura-dica">tá brisando também? segura aí</span>
+    </div>
+    <div class="seta">↓ rola pra soltar a sua</div>
+  </header>
+
+  <div id="aviso-demo" class="aviso-demo" hidden>
+    <b>Modo demonstração:</b> o que você soltar fica só neste navegador.
+    Conecte o Supabase (veja o LEIA-ME) pra abrir as brisas pro mundo.
+  </div>
+
+  <form id="form-pergunta" class="soltar" autocomplete="off" novalidate>
+    <span class="adesivo">solta a sua brisa</span>
+    <label for="texto-pergunta" class="so-leitor">Sua pergunta</label>
+    <textarea id="texto-pergunta" maxlength="280" required placeholder="qual pergunta não sai da sua cabeça?"></textarea>
+    <div class="linha-form">
+      <div class="campo">
+        <label for="tema-pergunta">sobre o quê?</label>
+        <select id="tema-pergunta"></select>
+      </div>
+      <div class="campo">
+        <label for="apelido-pergunta">seu apelido (se quiser)</label>
+        <input id="apelido-pergunta" maxlength="40" placeholder="anônimo">
+      </div>
+      <div class="mel" aria-hidden="true">
+        <label for="site-pergunta">Não preencha</label>
+        <input id="site-pergunta" tabindex="-1">
+      </div>
+      <button class="botao" type="submit">soltar ✦</button>
+    </div>
+    <div class="rodape-form">
+      <p class="mensagem" id="msg-pergunta" role="status"></p>
+      <span class="contador" id="cont-pergunta">0/280</span>
+    </div>
+  </form>
+
+  <div class="barra">
+    <h2 class="titulo-acervo">o acervo <span id="total"></span></h2>
+    <div class="ordem">
+      <label for="ordem" class="so-leitor">Ordenar</label>
+      <select id="ordem">
+        <option value="recentes">mais novas</option>
+        <option value="desdobradas">mais brisadas</option>
+        <option value="acaso">embaralhar</option>
+      </select>
+      <button class="botao claro" type="button" id="abrir-acaso">me dá uma brisa</button>
+    </div>
+    <div class="temas" id="temas" role="group" aria-label="Filtrar por tema"></div>
+  </div>
+
+  <section id="acervo" class="acervo" aria-live="polite"></section>
+
+  <footer>brisas · um hobby de malu lange</footer>
+</div>
+
+<dialog id="ficha" aria-labelledby="ficha-titulo">
+  <div class="ficha">
+    <div class="ficha-topo">
+      <span id="ficha-etiqueta"></span>
+      <button class="fechar" type="button" id="fechar" aria-label="Fechar">×</button>
+    </div>
+    <h2 id="ficha-titulo"></h2>
+    <div class="coleta" id="ficha-coleta"></div>
+    <div id="ficha-ramos"></div>
+
+    <form id="form-desd" class="junto" autocomplete="off" novalidate>
+      <span class="adesivo">brisar junto</span>
+      <p class="ajuda">Aqui ninguém responde. Puxa o fio com outra pergunta.</p>
+      <div class="tipos" id="tipos" role="radiogroup" aria-label="Jeito de brisar"></div>
+      <label for="texto-desd" class="so-leitor">Sua pergunta</label>
+      <textarea id="texto-desd" maxlength="280" required></textarea>
+      <div class="linha-form">
+        <div class="campo">
+          <label for="apelido-desd">seu apelido (se quiser)</label>
+          <input id="apelido-desd" maxlength="40" placeholder="anônimo">
+        </div>
+        <div class="mel" aria-hidden="true">
+          <label for="site-desd">Não preencha</label>
+          <input id="site-desd" tabindex="-1">
+        </div>
+        <button class="botao" type="submit">brisar ✦</button>
+      </div>
+      <div class="rodape-form">
+        <p class="mensagem" id="msg-desd" role="status"></p>
+        <span class="contador" id="cont-desd">0/280</span>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<script type="module">
+// ============================================================
+// CONFIGURAÇÃO — cole aqui os dados do seu projeto Supabase
+// (Project Settings → API). Enquanto estiver vazio, o app roda
+// em modo demonstração, guardando tudo só no seu navegador.
+// ============================================================
+const SUPABASE_URL = "https://ceyhuvnzzcognplujocx.supabase.co";   // ex.: "https://abcdefgh.supabase.co"
+const SUPABASE_KEY = "sb_publishable_8oH5NYqpnXNUhNowmhJ5BQ_KitjyYsh";   // a chave "publishable" (ou "anon public")
+// ============================================================
+
+// As chaves (à esquerda) precisam bater com o banco; os rótulos podem mudar à vontade.
+const TEMAS = {
+  sentido:   { nome: "sentido",   cor: "var(--amarelo)" },
+  tempo:     { nome: "tempo",     cor: "var(--ciano)" },
+  morte:     { nome: "morte",     cor: "var(--roxo)" },
+  amor:      { nome: "amor",      cor: "var(--rosa)" },
+  eu:        { nome: "eu",        cor: "var(--laranja)" },
+  outros:    { nome: "os outros", cor: "var(--verde)" },
+  liberdade: { nome: "liberdade", cor: "var(--azul)" },
+  mundo:     { nome: "o mundo",   cor: "#b8e34a" },
+  avulsas:   { nome: "avulsas",   cor: "#e8e5dd" },
+};
+const TIPOS = {
+  e_se:            { nome: "e se…",      cor: "var(--amarelo)", dica: "e se…?" },
+  mais_fundo:      { nome: "mais fundo", cor: "var(--ciano)",   dica: "mas o que tem por baixo disso…?" },
+  ao_contrario:    { nome: "do avesso",  cor: "var(--rosa)",    dica: "e se fosse exatamente o contrário…?" },
+  por_que_importa: { nome: "e daí?",     cor: "var(--verde)",   dica: "por que essa pergunta mexe tanto com a gente?" },
+};
+const CORES_RABISCO = ["#ff4fa3", "#3d5cff", "#ffd400", "#18c27a", "#ff6a2b", "#9b5cff", "#22c3e6"];
+const ESPERA_MS = 20000;
+
+const $ = (s) => document.querySelector(s);
+const fmtData = new Intl.DateTimeFormat("pt-BR", { day: "numeric", month: "short", year: "numeric" });
+const num = (id) => "nº " + String(id).padStart(4, "0");
+const giro = (id) => (((id * 37) % 7) - 3) * 0.55 + "deg";
+const calmo = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function el(tag, attrs = {}, ...filhos) {
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "class") n.className = v;
+    else if (k === "style") n.style.cssText = v;
+    else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+    else n.setAttribute(k, v);
+  }
+  for (const f of filhos.flat()) if (f != null) n.append(f);
+  return n;
+}
+function guardar(chave, valor) { try { localStorage.setItem(chave, JSON.stringify(valor)); } catch {} }
+function ler(chave, padrao) { try { const v = localStorage.getItem(chave); return v ? JSON.parse(v) : padrao; } catch { return padrao; } }
+
+// ---------- Rabiscos ----------
+const tela = $("#rabiscos");
+const NS = "http://www.w3.org/2000/svg";
+
+function rabiscar({ x, y, tamanho = 160, cor, espessura, duracao = 900, vida = 7000 } = {}) {
+  const W = innerWidth, H = innerHeight;
+  x ??= Math.random() * W; y ??= Math.random() * H;
+  cor ??= CORES_RABISCO[Math.floor(Math.random() * CORES_RABISCO.length)];
+  espessura ??= 6 + Math.random() * 10;
+  // Laçadas: gira em torno de um centro que vai andando
+  let ang = Math.random() * Math.PI * 2, cx = x, cy = y;
+  const deriva = Math.random() * Math.PI * 2;
+  const passos = 18 + Math.floor(Math.random() * 22);
+  const pontos = [];
+  for (let i = 0; i < passos; i++) {
+    const r = tamanho * (0.25 + Math.random() * 0.35);
+    ang += 0.8 + Math.random() * 0.9;
+    cx += Math.cos(deriva) * tamanho * 0.09; cy += Math.sin(deriva) * tamanho * 0.09;
+    pontos.push([cx + Math.cos(ang) * r, cy + Math.sin(ang) * r * (0.6 + Math.random() * 0.5)]);
+  }
+  let d = `M${pontos[0][0].toFixed(1)} ${pontos[0][1].toFixed(1)}`;
+  for (let i = 1; i < pontos.length - 1; i++) {
+    const mx = (pontos[i][0] + pontos[i + 1][0]) / 2, my = (pontos[i][1] + pontos[i + 1][1]) / 2;
+    d += ` Q${pontos[i][0].toFixed(1)} ${pontos[i][1].toFixed(1)} ${mx.toFixed(1)} ${my.toFixed(1)}`;
+  }
+  const p = document.createElementNS(NS, "path");
+  p.setAttribute("d", d);
+  p.setAttribute("stroke", cor);
+  p.setAttribute("stroke-width", espessura.toFixed(1));
+  p.style.mixBlendMode = "multiply";
+  tela.append(p);
+  if (!calmo) {
+    const L = p.getTotalLength();
+    p.style.strokeDasharray = L; p.style.strokeDashoffset = L;
+    p.animate([{ strokeDashoffset: L }, { strokeDashoffset: 0 }], { duration: duracao, easing: "ease-out", fill: "forwards" });
+  }
+  if (vida) setTimeout(() => { p.classList.add("sumindo"); setTimeout(() => p.remove(), 1700); }, vida);
+  // limite de segurança
+  while (tela.childElementCount > 160) tela.firstElementChild.remove();
+  return p;
+}
+function rajada(qtd, origem) {
+  for (let i = 0; i < qtd; i++) {
+    setTimeout(() => rabiscar(origem ? {
+      x: origem.x + (Math.random() - .5) * 260, y: origem.y + (Math.random() - .5) * 200, tamanho: 90 + Math.random() * 90,
+    } : {}), i * (calmo ? 0 : 70));
+  }
+}
+function ajustarTela() { tela.setAttribute("viewBox", `0 0 ${innerWidth} ${innerHeight}`); }
+ajustarTela(); addEventListener("resize", ajustarTela);
+
+// alguns rabiscos permanentes nos cantos
+[[0.08, 0.14, "#ffd400"], [0.92, 0.2, "#3d5cff"], [0.12, 0.82, "#18c27a"], [0.88, 0.78, "#ff4fa3"]].forEach(([fx, fy, cor], i) =>
+  setTimeout(() => rabiscar({ x: innerWidth * fx, y: innerHeight * fy, cor, tamanho: Math.min(innerWidth, 900) * 0.16, vida: 0, duracao: 1400 }), 400 + i * 220));
+
+// botão "segura"
+const segura = $("#segura");
+let timerSegura = null;
+function comecar(e) {
+  e.preventDefault();
+  segura.classList.add("segurando");
+  segura.textContent = "brisando…";
+  rabiscar({ tamanho: 220 });
+  timerSegura = setInterval(() => rabiscar({ tamanho: 120 + Math.random() * 220 }), calmo ? 400 : 90);
+}
+function parar() {
+  if (!timerSegura) return;
+  clearInterval(timerSegura); timerSegura = null;
+  segura.classList.remove("segurando");
+  segura.textContent = "segura";
+}
+segura.addEventListener("pointerdown", comecar);
+["pointerup", "pointerleave", "pointercancel"].forEach((ev) => segura.addEventListener(ev, parar));
+segura.addEventListener("keydown", (e) => { if ((e.key === " " || e.key === "Enter") && !timerSegura && !e.repeat) comecar(e); });
+segura.addEventListener("keyup", (e) => { if (e.key === " " || e.key === "Enter") parar(); });
+segura.addEventListener("contextmenu", (e) => e.preventDefault());
+
+// ---------- Camada de dados ----------
+const conectado = SUPABASE_URL.startsWith("https://") && SUPABASE_KEY.length > 20;
+let sb = null;
+if (conectado) {
+  const { createClient } = await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm");
+  sb = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } });
+} else {
+  $("#aviso-demo").hidden = false;
+}
+
+const DEMO_INICIAL = {
+  perguntas: [
+    { id: 1, texto: "Se ninguém nunca soubesse o que eu fiz, eu ainda seria a mesma pessoa?", apelido: "Lia", gaveta: "eu", criada_em: "2026-09-02T12:00:00Z" },
+    { id: 2, texto: "Quando foi a última vez que eu fiz algo pela primeira vez?", apelido: null, gaveta: "tempo", criada_em: "2026-09-10T12:00:00Z" },
+    { id: 3, texto: "O que em mim vai continuar existindo quando eu não existir mais?", apelido: "R.", gaveta: "morte", criada_em: "2026-09-18T12:00:00Z" },
+    { id: 4, texto: "Amar alguém é querer que ela mude ou que ela fique?", apelido: null, gaveta: "amor", criada_em: "2026-09-25T12:00:00Z" },
+    { id: 5, texto: "Quanto da minha liberdade eu entreguei sem perceber?", apelido: "tomás", gaveta: "liberdade", criada_em: "2026-10-01T12:00:00Z" },
+    { id: 6, texto: "Precisa haver um sentido pra valer a pena?", apelido: null, gaveta: "sentido", criada_em: "2026-10-06T12:00:00Z" },
+  ],
+  desdobramentos: [
+    { id: 1, pergunta_id: 1, tipo: "ao_contrario", texto: "E se eu só me tornasse alguém justamente pelo que ninguém vê?", apelido: null, criada_em: "2026-09-03T12:00:00Z" },
+    { id: 2, pergunta_id: 1, tipo: "mais_fundo", texto: "Quem é o 'eu' que sobra quando tiro todas as testemunhas?", apelido: "Bia", criada_em: "2026-09-05T12:00:00Z" },
+    { id: 3, pergunta_id: 3, tipo: "por_que_importa", texto: "Por que me consola pensar que algo de mim permanece?", apelido: null, criada_em: "2026-09-20T12:00:00Z" },
+    { id: 4, pergunta_id: 6, tipo: "e_se", texto: "E se o sentido fosse uma coisa que se faz, e não que se encontra?", apelido: "Lia", criada_em: "2026-10-07T12:00:00Z" },
+  ],
+};
+let demo = ler("brisas-demo", null) || structuredClone(DEMO_INICIAL);
+const salvarDemo = () => guardar("brisas-demo", demo);
+
+async function listarPerguntas() {
+  if (!sb) return demo.perguntas.map((p) => ({ ...p, n: demo.desdobramentos.filter((d) => d.pergunta_id === p.id).length }));
+  const { data, error } = await sb.from("perguntas")
+    .select("id, texto, apelido, gaveta, criada_em, desdobramentos(count)")
+    .order("criada_em", { ascending: false }).limit(1000);
+  if (error) throw error;
+  return data.map((p) => ({ ...p, n: p.desdobramentos?.[0]?.count ?? 0 }));
+}
+async function listarDesdobramentos(perguntaId) {
+  if (!sb) return demo.desdobramentos.filter((d) => d.pergunta_id === perguntaId);
+  const { data, error } = await sb.from("desdobramentos")
+    .select("id, tipo, texto, apelido, criada_em").eq("pergunta_id", perguntaId).order("criada_em", { ascending: true });
+  if (error) throw error;
+  return data;
+}
+async function inserir(tabela, registro) {
+  if (!sb) {
+    const lista = demo[tabela];
+    const id = lista.reduce((m, r) => Math.max(m, r.id), 0) + 1;
+    lista.push({ id, ...registro, criada_em: new Date().toISOString() });
+    salvarDemo();
+    return;
+  }
+  const { error } = await sb.from(tabela).insert(registro);
+  if (error) throw error;
+}
+
+// ---------- Validação ----------
+const limpar = (t) => t.replace(/\s+/g, " ").trim();
+function validar(texto) {
+  if (texto.length < 5) return "Escreve um pouquinho mais.";
+  if (!/\?\s*$/.test(texto)) return "Aqui só vale pergunta: termina com “?”";
+  return null;
+}
+const podeEnviar = () => Date.now() - ler("brisas-ultimo-envio", 0) > ESPERA_MS;
+const marcarEnvio = () => guardar("brisas-ultimo-envio", Date.now());
+function ligarContador(textarea, contador) {
+  const atualizar = () => { const n = textarea.value.length; contador.textContent = n + "/280"; contador.classList.toggle("alerta", n > 260); };
+  textarea.addEventListener("input", atualizar); atualizar();
+}
+
+// ---------- Estado e renderização ----------
+let perguntas = [];
+let filtro = "todas";
+let ordem = "recentes";
+let aberta = null;
+const corTema = (k) => TEMAS[k]?.cor || "#e8e5dd";
+const nomeTema = (k) => TEMAS[k]?.nome || k;
+
+function montarControles() {
+  const sel = $("#tema-pergunta");
+  for (const [k, t] of Object.entries(TEMAS)) sel.append(el("option", { value: k }, t.nome));
+  sel.value = "avulsas";
+
+  const barra = $("#temas");
+  for (const [k, nome, cor] of [["todas", "todas", "var(--tinta)"], ...Object.entries(TEMAS).map(([k, t]) => [k, t.nome, t.cor])]) {
+    barra.append(el("button", {
+      type: "button", class: "tema", "data-tema": k, style: `--cor:${cor}`, "aria-pressed": String(k === filtro),
+      onclick: () => { filtro = k; document.querySelectorAll(".tema").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.tema === filtro))); renderAcervo(); },
+    }, nome));
+  }
+
+  const tipos = $("#tipos");
+  Object.entries(TIPOS).forEach(([k, t], i) => {
+    const input = el("input", { type: "radio", name: "tipo", value: k });
+    if (i === 0) input.checked = true;
+    input.addEventListener("change", () => { $("#texto-desd").placeholder = t.dica; });
+    tipos.append(el("label", { style: `--cor:${t.cor}` }, input, el("span", {}, t.nome)));
+  });
+  $("#texto-desd").placeholder = TIPOS.e_se.dica;
+}
+
+function embaralhar(lista) {
+  const a = [...lista];
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+
+function renderAcervo() {
+  const acervo = $("#acervo");
+  let lista = perguntas.filter((p) => filtro === "todas" || p.gaveta === filtro);
+  if (ordem === "recentes") lista.sort((a, b) => new Date(b.criada_em) - new Date(a.criada_em));
+  if (ordem === "desdobradas") lista.sort((a, b) => b.n - a.n || new Date(b.criada_em) - new Date(a.criada_em));
+  if (ordem === "acaso") lista = embaralhar(lista);
+  $("#total").textContent = perguntas.length ? `(${perguntas.length} brisa${perguntas.length > 1 ? "s" : ""})` : "";
+
+  acervo.replaceChildren();
+  if (!lista.length) {
+    acervo.append(el("p", { class: "vazio" }, filtro === "todas" ? "Nenhuma brisa por aqui ainda. Solta a primeira!" : "Ninguém brisou sobre isso ainda."));
+    return;
+  }
+  for (const p of lista) {
+    acervo.append(el("button", {
+      type: "button", class: "brisa", style: `--giro:${giro(p.id)};--cor:${corTema(p.gaveta)}`,
+      "aria-label": `Brisa ${num(p.id)}: ${p.texto}`, onclick: () => abrir(p.id),
+    },
+      el("div", { class: "brisa-topo" }, el("span", { class: "chip" }, nomeTema(p.gaveta)), el("span", { class: "numero" }, num(p.id))),
+      el("div", { class: "texto" }, p.texto),
+      el("div", { class: "brisa-pe" },
+        el("span", {}, p.apelido || "anônimo"),
+        el("span", { class: "juntos" }, p.n === 1 ? "↳ 1 brisou junto" : p.n ? `↳ ${p.n} brisaram junto` : "↳ brisar junto")),
+    ));
+  }
+}
+
+async function carregar() {
+  try { perguntas = await listarPerguntas(); renderAcervo(); }
+  catch (e) { console.error(e); $("#acervo").replaceChildren(el("p", { class: "vazio" }, "Deu um nó aqui. Tenta recarregar a página?")); }
+}
+
+// ---------- Ficha ----------
+const ficha = $("#ficha");
+async function abrir(id) {
+  const p = perguntas.find((x) => x.id === id);
+  if (!p) return;
+  aberta = p;
+  if (location.hash !== "#" + id) history.replaceState(null, "", "#" + id);
+  $("#ficha-etiqueta").replaceChildren(
+    el("span", { class: "chip", style: `--cor:${corTema(p.gaveta)};font-size:13px` }, nomeTema(p.gaveta)),
+    el("span", { class: "numero", style: "margin-left:10px" }, "brisa " + num(p.id)));
+  $("#ficha-titulo").textContent = p.texto;
+  $("#ficha-coleta").textContent = `solta ${p.apelido ? "por " + p.apelido + " " : ""}em ${fmtData.format(new Date(p.criada_em))}`;
+  $("#msg-desd").textContent = "";
+  $("#ficha-ramos").replaceChildren(el("p", { class: "ramos-vazio" }, "puxando os fios…"));
+  if (!ficha.open) ficha.showModal();
+  await renderRamos();
+}
+async function renderRamos() {
+  const ramos = $("#ficha-ramos");
+  try {
+    const lista = await listarDesdobramentos(aberta.id);
+    if (!lista.length) { ramos.replaceChildren(el("p", { class: "ramos-vazio" }, "Ninguém brisou junto ainda. Vai você?")); return; }
+    ramos.replaceChildren(el("ul", { class: "ramos" }, lista.map((d) =>
+      el("li", { style: `--cor:${TIPOS[d.tipo]?.cor || "var(--amarelo)"}` },
+        el("span", { class: "tipo" }, TIPOS[d.tipo]?.nome || d.tipo),
+        el("p", {}, d.texto),
+        el("small", {}, `${d.apelido || "anônimo"} · ${fmtData.format(new Date(d.criada_em))}`)))));
+  } catch (e) { console.error(e); ramos.replaceChildren(el("p", { class: "ramos-vazio" }, "Não consegui puxar os fios agora.")); }
+}
+ficha.addEventListener("close", () => { aberta = null; if (location.hash) history.replaceState(null, "", location.pathname + location.search); });
+ficha.addEventListener("click", (e) => { if (e.target === ficha) ficha.close(); });
+$("#fechar").addEventListener("click", () => ficha.close());
+
+// ---------- Formulários ----------
+function centroDe(elemento) { const r = elemento.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }
+
+$("#form-pergunta").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const msg = $("#msg-pergunta");
+  const botao = e.target.querySelector("button[type=submit]");
+  const texto = limpar($("#texto-pergunta").value);
+  const erro = validar(texto);
+  if (erro) { msg.textContent = erro; return; }
+  if ($("#site-pergunta").value) { msg.textContent = "Brisa solta!"; return; }
+  if (!podeEnviar()) { msg.textContent = "Calma, respira e solta a próxima daqui a pouco."; return; }
+  botao.disabled = true; msg.textContent = "soltando…";
+  try {
+    await inserir("perguntas", { texto, apelido: limpar($("#apelido-pergunta").value) || null, gaveta: $("#tema-pergunta").value });
+    marcarEnvio();
+    $("#texto-pergunta").value = ""; $("#texto-pergunta").dispatchEvent(new Event("input"));
+    msg.textContent = "Brisa solta no acervo ✦";
+    rajada(9, centroDe(botao));
+    ordem = "recentes"; $("#ordem").value = "recentes";
+    await carregar();
+  } catch (err) { console.error(err); msg.textContent = "Não rolou agora. Tenta de novo daqui a pouco?"; }
+  finally { botao.disabled = false; }
+});
+
+$("#form-desd").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (!aberta) return;
+  const msg = $("#msg-desd");
+  const botao = e.target.querySelector("button[type=submit]");
+  const texto = limpar($("#texto-desd").value);
+  const erro = validar(texto);
+  if (erro) { msg.textContent = erro; return; }
+  if ($("#site-desd").value) { msg.textContent = "Brisou junto!"; return; }
+  if (!podeEnviar()) { msg.textContent = "Calma, respira e brisa de novo daqui a pouco."; return; }
+  botao.disabled = true; msg.textContent = "brisando…";
+  try {
+    await inserir("desdobramentos", {
+      pergunta_id: aberta.id, tipo: e.target.querySelector("input[name=tipo]:checked").value,
+      texto, apelido: limpar($("#apelido-desd").value) || null,
+    });
+    marcarEnvio();
+    $("#texto-desd").value = ""; $("#texto-desd").dispatchEvent(new Event("input"));
+    msg.textContent = "Brisou junto ✦";
+    aberta.n += 1;
+    await renderRamos(); renderAcervo();
+  } catch (err) { console.error(err); msg.textContent = "Não rolou agora. Tenta de novo daqui a pouco?"; }
+  finally { botao.disabled = false; }
+});
+
+// ---------- Controles ----------
+$("#ordem").addEventListener("change", (e) => { ordem = e.target.value; renderAcervo(); });
+$("#abrir-acaso").addEventListener("click", () => {
+  const lista = perguntas.filter((p) => filtro === "todas" || p.gaveta === filtro);
+  if (lista.length) abrir(lista[Math.floor(Math.random() * lista.length)].id);
+});
+function abrirPeloLink() { const id = Number(location.hash.slice(1)); if (id) abrir(id); }
+addEventListener("hashchange", abrirPeloLink);
+
+// ---------- Início ----------
+montarControles();
+ligarContador($("#texto-pergunta"), $("#cont-pergunta"));
+ligarContador($("#texto-desd"), $("#cont-desd"));
+await carregar();
+abrirPeloLink();
+</script>
+</body>
+</html>
