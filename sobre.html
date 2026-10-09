@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>por que brisar? · brisas</title>
+<meta name="description" content="Um pequeno ensaio sobre curiosidade, perguntas sem resposta e o valor de conviver com o não-saber em tempos de respostas instantâneas.">
+<meta property="og:title" content="por que brisar?">
+<meta property="og:description" content="Sobre curiosidade, perguntas sem resposta e o valor do não-saber.">
+<meta name="theme-color" content="#f7f6f3">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M20 60c10-40 50-50 60-20s-40 40-30 10 40-20 30 20' fill='none' stroke='%23ff4fa3' stroke-width='12' stroke-linecap='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Unbounded:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fundo: #f7f6f3; --branco: #ffffff; --tinta: #141414; --tinta-suave: #5c5a55;
+    --rosa: #ff4fa3; --azul: #3d5cff; --amarelo: #ffd400; --verde: #18c27a;
+    --laranja: #ff6a2b; --roxo: #9b5cff; --ciano: #22c3e6;
+    --borda: 2px solid var(--tinta);
+    --sans: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --mao: "Unbounded", "Helvetica Neue", Arial, sans-serif;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--fundo); color: var(--tinta); font-family: var(--sans); font-size: 19px; line-height: 1.6; overflow-x: hidden; }
+  #rabiscos { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; }
+  #rabiscos path { fill: none; stroke-linecap: round; stroke-linejoin: round; mix-blend-mode: multiply; }
+  .pagina { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 24px 16px 96px; }
+
+  .voltar {
+    display: inline-block; text-decoration: none; color: var(--tinta); background: var(--branco); border: var(--borda);
+    border-radius: 999px; padding: 6px 14px; font-family: var(--mao); font-size: 12px; box-shadow: 3px 3px 0 var(--tinta);
+    transition: transform .1s, box-shadow .1s, background .2s;
+  }
+  .voltar:hover { background: var(--amarelo); }
+  .voltar:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--tinta); }
+
+  header { padding: 64px 0 40px; }
+  .chapeu { font-family: var(--mao); font-size: 13px; color: var(--tinta-suave); }
+  h1 { font-weight: 800; font-size: clamp(64px, 14vw, 132px); line-height: .88; letter-spacing: -.05em; margin: 14px 0 22px; }
+  h1 span { position: relative; display: inline-block; }
+  h1 span::after { content: ""; position: absolute; left: -2%; right: -2%; bottom: .04em; height: .16em; background: var(--rosa); z-index: -1; transform: rotate(-1.5deg); border-radius: 999px; }
+  .lede { font-size: clamp(21px, 3vw, 25px); line-height: 1.4; margin: 0; }
+
+  section { margin-top: 56px; }
+  h2 { font-weight: 800; font-size: clamp(30px, 5vw, 42px); line-height: 1.02; letter-spacing: -.035em; margin: 0 0 18px; display: flex; gap: 14px; align-items: flex-start; }
+  .n {
+    flex: none; display: inline-grid; place-items: center; width: 44px; height: 44px; margin-top: 2px; border: var(--borda); border-radius: 50%;
+    font-family: var(--mao); font-size: 14px; letter-spacing: 0; background: var(--cor, var(--amarelo)); box-shadow: 3px 3px 0 var(--tinta);
+  }
+  p { margin: 0 0 18px; }
+  strong { font-weight: 600; background: linear-gradient(transparent 60%, color-mix(in srgb, var(--amarelo) 70%, transparent) 60%); }
+  em { font-style: italic; }
+  sup a { font-family: var(--mao); font-size: 10px; text-decoration: none; color: var(--azul); padding: 0 1px; }
+  sup a:hover { text-decoration: underline; }
+
+  .citacao {
+    margin: 28px 0; padding: 22px 22px 18px; background: var(--branco); border: var(--borda); border-radius: 22px;
+    box-shadow: 6px 6px 0 var(--cor, var(--rosa)); transform: rotate(var(--giro, -.6deg));
+  }
+  .citacao p { font-weight: 600; font-size: clamp(21px, 3vw, 25px); line-height: 1.3; letter-spacing: -.01em; margin: 0 0 12px; }
+  .citacao cite { font-style: normal; font-family: var(--mao); font-size: 12px; color: var(--tinta-suave); }
+
+  .fecho { margin-top: 64px; text-align: center; padding: 34px 22px; background: var(--branco); border: var(--borda); border-radius: 26px; box-shadow: 8px 8px 0 var(--tinta); }
+  .fecho p { font-weight: 800; font-size: clamp(26px, 4.4vw, 36px); line-height: 1.1; letter-spacing: -.03em; margin: 0 0 22px; }
+  .botao {
+    display: inline-block; text-decoration: none; border: var(--borda); border-radius: 999px; background: var(--tinta); color: var(--branco);
+    padding: 11px 24px; font-weight: 800; font-size: 17px; box-shadow: 3px 3px 0 var(--rosa); transition: transform .1s, box-shadow .1s, background .2s;
+  }
+  .botao:hover { background: var(--azul); }
+  .botao:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--rosa); }
+
+  .referencias { margin-top: 72px; border-top: 2px dashed #d3cfc5; padding-top: 28px; }
+  .referencias h2 { font-size: 24px; }
+  .referencias ol { padding-left: 22px; margin: 0; font-size: 15px; line-height: 1.5; color: var(--tinta-suave); }
+  .referencias li { margin-bottom: 10px; }
+  .referencias li:target { background: color-mix(in srgb, var(--amarelo) 45%, transparent); }
+
+  footer { text-align: center; margin-top: 56px; font-family: var(--mao); font-size: 12px; color: var(--tinta-suave); }
+  footer a { color: var(--tinta); }
+
+  @media (max-width: 560px) {
+    body { font-size: 18px; }
+    header { padding-top: 40px; }
+    .n { width: 38px; height: 38px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<svg id="rabiscos" aria-hidden="true"></svg>
+
+<div class="pagina">
+  <a class="voltar" href="./">← voltar pras brisas</a>
+
+  <header>
+    <div class="chapeu">um pequeno ensaio</div>
+    <h1>por que <span>brisar?</span></h1>
+    <p class="lede">Sobre curiosidade, perguntas que não precisam de resposta e o raro prazer de não saber, num tempo em que quase tudo cabe numa busca de dois segundos.</p>
+  </header>
+
+  <section style="--cor: var(--amarelo)">
+    <h2><span class="n">01</span>a pergunta é um vazio que puxa</h2>
+    <p>Toda pergunta de verdade começa com uma lacuna. Em 1954, o psicólogo Daniel Berlyne separou dois tipos de curiosidade: a <em>perceptiva</em>, que faz a gente virar a cabeça quando ouve um barulho estranho, e a <em>epistêmica</em>, a vontade de entender, de saber mais.<sup><a href="#r1">1</a></sup></p>
+    <p>Quarenta anos depois, o economista comportamental George Loewenstein propôs uma imagem simples para ela: curiosidade é a sensação de perceber uma <strong>lacuna entre o que se sabe e o que se gostaria de saber</strong>.<sup><a href="#r2">2</a></sup> Ela quase não aparece quando não sabemos nada, nem quando já sabemos tudo. Mora na beirada, quando sabemos o suficiente para notar o que falta.</p>
+    <p>Por isso uma boa pergunta não encerra um assunto. Ela abre uma fresta.</p>
+  </section>
+
+  <section style="--cor: var(--ciano)">
+    <h2><span class="n">02</span>curiosidade é o motor do aprender</h2>
+    <p>A neurociência tem mostrado que curiosidade não é enfeite: ela muda o jeito como o cérebro aprende. Num estudo de 2009, quanto mais curiosas as pessoas estavam sobre a resposta de uma pergunta, mais ativavam regiões ligadas à recompensa, e melhor se lembravam da resposta depois.<sup><a href="#r3">3</a></sup></p>
+    <p>Em 2014, Matthias Gruber e colegas foram além. Quando as pessoas estavam curiosas, também memorizavam melhor <strong>informações sem relação nenhuma</strong> que apareciam no meio do caminho, efeito associado à ação conjunta do circuito dopaminérgico e do hipocampo, a região central da memória.<sup><a href="#r4">4</a></sup> A curiosidade, em outras palavras, deixa o cérebro preparado para aprender, inclusive o que está ao redor da pergunta.</p>
+    <p>E o efeito não fica só na memória. Pesquisas sobre bem-estar associam a curiosidade a uma vida percebida como mais rica de sentido.<sup><a href="#r5">5</a></sup> Revisões recentes tratam a busca por informação como um impulso tão básico quanto outros apetites, presente em humanos e em outros animais.<sup><a href="#r6">6</a></sup></p>
+  </section>
+
+  <section style="--cor: var(--verde)">
+    <h2><span class="n">03</span>crianças perguntam. a escola, muitas vezes, responde.</h2>
+    <p>Qualquer pessoa que já conviveu com uma criança pequena conhece a enxurrada de "por quês". A psicóloga Susan Engel, que estuda as origens da curiosidade na infância, observou que essa torrente de perguntas costuma minguar quando as crianças entram em ambientes que premiam a resposta certa mais do que a pergunta boa.<sup><a href="#r7">7</a></sup> A curiosidade não desaparece sozinha. Ela vai sendo desencorajada.</p>
+    <p>Paulo Freire e Antonio Faundez dedicaram um livro inteiro a isso. Em <em>Por uma pedagogia da pergunta</em>, eles criticam a escola que entrega respostas para perguntas que ninguém fez, e alertam para a <strong>"castração da curiosidade"</strong>.<sup><a href="#r8">8</a></sup> Para os dois, perguntar não é sinal de ignorância: é o primeiro gesto de quem está conhecendo o mundo, e também um gesto de liberdade.</p>
+  </section>
+
+  <section style="--cor: var(--rosa)">
+    <h2><span class="n">04</span>o desconforto do não-saber</h2>
+    <p>Ficar com uma pergunta aberta incomoda. A psicologia tem nome para isso: <strong>necessidade de fechamento cognitivo</strong>. Quando estamos com pressa, cansados ou diante de muita ambiguidade, tendemos a agarrar a primeira resposta disponível e a congelar nela, parando de considerar alternativas.<sup><a href="#r9">9</a></sup></p>
+    <p>Poetas e filósofos chegaram antes ao mesmo lugar, mas pelo outro lado: tratando o não-saber como uma capacidade a ser cultivada. Em 1817, numa carta aos irmãos, John Keats chamou de <em>capacidade negativa</em> a habilidade de permanecer em incertezas sem correr atrás de uma conclusão.<sup><a href="#r10">10</a></sup></p>
+    <div class="citacao" style="--cor: var(--rosa); --giro: -.8deg">
+      <p>"…capaz de estar em incertezas, mistérios, dúvidas, sem a busca irritada por fato e razão."</p>
+      <cite>John Keats, carta de dezembro de 1817 (tradução livre)</cite>
+    </div>
+    <p>Quase um século depois, Rainer Maria Rilke deu a um jovem poeta um conselho que poderia estar na porta deste site.<sup><a href="#r11">11</a></sup></p>
+    <div class="citacao" style="--cor: var(--roxo); --giro: .7deg">
+      <p>"Tenha paciência com tudo o que não está resolvido no seu coração, e tente amar as próprias perguntas."</p>
+      <cite>Rainer Maria Rilke, carta de julho de 1903 (tradução livre)</cite>
+    </div>
+    <p>A ideia é antiga. Na <em>Apologia</em> de Platão, Sócrates diz que sua única vantagem sobre os outros era saber que não sabia.<sup><a href="#r12">12</a></sup> O não-saber reconhecido não é o fim da conversa. É o começo dela.</p>
+  </section>
+
+  <section style="--cor: var(--laranja)">
+    <h2><span class="n">05</span>respostas na palma da mão</h2>
+    <p>Nunca foi tão fácil fechar uma pergunta. E isso tem efeitos. Um estudo publicado na <em>Science</em> em 2011 mostrou que, quando esperamos poder acessar uma informação depois, tendemos a lembrar menos do conteúdo e mais de <strong>onde encontrá-lo</strong>: a internet passou a funcionar como uma memória externa.<sup><a href="#r13">13</a></sup></p>
+    <p>Outra pesquisa, de 2015, encontrou algo mais curioso. Depois de buscar explicações online, as pessoas passavam a <strong>superestimar o quanto sabiam</strong>, inclusive sobre assuntos que nem tinham pesquisado.<sup><a href="#r14">14</a></sup> Delegar parte do pensamento a ferramentas, o que os pesquisadores chamam de <em>descarregamento cognitivo</em>, é útil e muito humano, mas tem custos que nem sempre percebemos.<sup><a href="#r15">15</a></sup></p>
+    <p>Com as inteligências artificiais generativas, a resposta chega ainda mais rápida, fluente e convincente. O ponto aqui não é ser contra a tecnologia. É notar o ritmo. Quando toda pergunta é fechada em segundos, perdemos o tempo em que ela trabalha em nós: o tempo em que a gente vira a pergunta do avesso, junta com outra, descobre que ela era sobre outra coisa.</p>
+    <p><strong>Algumas perguntas não pedem resposta. Pedem companhia.</strong></p>
+  </section>
+
+  <section style="--cor: var(--roxo)">
+    <h2><span class="n">06</span>por que um acervo de brisas</h2>
+    <p>As brisas nasceram dessas ideias, e cada escolha do site tenta honrá-las:</p>
+    <p><strong>Aqui só entram perguntas.</strong> Ninguém responde ninguém. Quem quer contribuir devolve outra pergunta, que desdobra, inverte ou aprofunda a primeira. É um jeito de praticar a capacidade negativa em grupo.</p>
+    <p><strong>As perguntas ficam à vista.</strong> Ler a pergunta de outra pessoa é olhar o mundo pela fresta dela. Um acervo coletivo transforma uma inquietação solitária, aquela das três da manhã, em algo compartilhado.</p>
+    <p><strong>Brisar junto é curiosidade social.</strong> A curiosidade cresce quando encontra eco. Uma pergunta desdobrada por várias pessoas vira um pequeno mapa do que ainda não sabemos, e isso também é conhecimento.</p>
+  </section>
+
+  <div class="fecho">
+    <p>A resposta pode esperar.<br>A pergunta, não.</p>
+    <a class="botao" href="./">brisar agora</a>
+  </div>
+
+  <section class="referencias" aria-labelledby="ref-titulo">
+    <h2 id="ref-titulo">referências</h2>
+    <ol>
+      <li id="r1">Berlyne, D. E. (1954). A theory of human curiosity. <em>British Journal of Psychology</em>, 45(3), 180–191.</li>
+      <li id="r2">Loewenstein, G. (1994). The psychology of curiosity: A review and reinterpretation. <em>Psychological Bulletin</em>, 116(1), 75–98.</li>
+      <li id="r3">Kang, M. J., Hsu, M., Krajbich, I. M., Loewenstein, G., McClure, S. M., Wang, J. T., &amp; Camerer, C. F. (2009). The wick in the candle of learning: Epistemic curiosity activates reward circuitry and enhances memory. <em>Psychological Science</em>, 20(8), 963–973.</li>
+      <li id="r4">Gruber, M. J., Gelman, B. D., &amp; Ranganath, C. (2014). States of curiosity modulate hippocampus-dependent learning via the dopaminergic circuit. <em>Neuron</em>, 84(2), 486–496.</li>
+      <li id="r5">Kashdan, T. B., &amp; Steger, M. F. (2007). Curiosity and pathways to well-being and meaning in life. <em>Motivation and Emotion</em>, 31(3), 159–173.</li>
+      <li id="r6">Kidd, C., &amp; Hayden, B. Y. (2015). The psychology and neuroscience of curiosity. <em>Neuron</em>, 88(3), 449–460.</li>
+      <li id="r7">Engel, S. (2015). <em>The Hungry Mind: The Origins of Curiosity in Childhood</em>. Harvard University Press.</li>
+      <li id="r8">Freire, P., &amp; Faundez, A. (1985). <em>Por uma pedagogia da pergunta</em>. Rio de Janeiro: Paz e Terra.</li>
+      <li id="r9">Kruglanski, A. W., &amp; Webster, D. M. (1996). Motivated closing of the mind: "Seizing" and "freezing". <em>Psychological Review</em>, 103(2), 263–283.</li>
+      <li id="r10">Keats, J. (1817). Carta a George e Tom Keats, 21 de dezembro de 1817.</li>
+      <li id="r11">Rilke, R. M. (1929). <em>Cartas a um jovem poeta</em> (carta de 16 de julho de 1903).</li>
+      <li id="r12">Platão. <em>Apologia de Sócrates</em>, 21d.</li>
+      <li id="r13">Sparrow, B., Liu, J., &amp; Wegner, D. M. (2011). Google effects on memory: Cognitive consequences of having information at our fingertips. <em>Science</em>, 333(6043), 776–778.</li>
+      <li id="r14">Fisher, M., Goddu, M. K., &amp; Keil, F. C. (2015). Searching for explanations: How the Internet inflates estimates of internal knowledge. <em>Journal of Experimental Psychology: General</em>, 144(3), 674–687.</li>
+      <li id="r15">Risko, E. F., &amp; Gilbert, S. J. (2016). Cognitive offloading. <em>Trends in Cognitive Sciences</em>, 20(9), 676–688.</li>
+    </ol>
+  </section>
+
+  <footer><a href="./">brisas</a> · um hobby de malu lange</footer>
+</div>
+
+<script>
+// Alguns rabiscos fixos nas bordas, desenhados uma vez
+(function () {
+  const tela = document.getElementById("rabiscos");
+  const NS = "http://www.w3.org/2000/svg";
+  const calmo = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function rabiscar(x, y, tamanho, cor, espessura, atraso) {
+    let ang = Math.random() * Math.PI * 2, cx = x, cy = y;
+    const deriva = Math.random() * Math.PI * 2, pontos = [];
+    for (let i = 0; i < 26; i++) {
+      const r = tamanho * (0.25 + Math.random() * 0.35);
+      ang += 0.8 + Math.random() * 0.9;
+      cx += Math.cos(deriva) * tamanho * 0.08; cy += Math.sin(deriva) * tamanho * 0.08;
+      pontos.push([cx + Math.cos(ang) * r, cy + Math.sin(ang) * r * (0.6 + Math.random() * 0.5)]);
+    }
+    let d = `M${pontos[0][0]} ${pontos[0][1]}`;
+    for (let i = 1; i < pontos.length - 1; i++) {
+      d += ` Q${pontos[i][0]} ${pontos[i][1]} ${(pontos[i][0] + pontos[i + 1][0]) / 2} ${(pontos[i][1] + pontos[i + 1][1]) / 2}`;
+    }
+    const p = document.createElementNS(NS, "path");
+    p.setAttribute("d", d); p.setAttribute("stroke", cor); p.setAttribute("stroke-width", espessura);
+    tela.append(p);
+    if (!calmo) {
+      const L = p.getTotalLength();
+      p.style.strokeDasharray = L; p.style.strokeDashoffset = L;
+      p.animate([{ strokeDashoffset: L }, { strokeDashoffset: 0 }], { duration: 1400, delay: atraso, easing: "ease-out", fill: "forwards" });
+    }
+  }
+  function desenhar() {
+    tela.replaceChildren();
+    const W = innerWidth, H = innerHeight;
+    tela.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    const t = Math.min(W, 900) * 0.15;
+    rabiscar(W * 0.05, H * 0.2, t, "#ffd400", 10, 200);
+    rabiscar(W * 0.95, H * 0.35, t, "#3d5cff", 9, 450);
+    rabiscar(W * 0.06, H * 0.85, t, "#18c27a", 10, 700);
+    rabiscar(W * 0.94, H * 0.88, t, "#ff4fa3", 11, 950);
+  }
+  desenhar();
+  let timer; addEventListener("resize", () => { clearTimeout(timer); timer = setTimeout(desenhar, 250); });
+})();
+</script>
+</body>
+</html>

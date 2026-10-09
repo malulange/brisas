@@ -11,7 +11,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M20 60c10-40 50-50 60-20s-40 40-30 10 40-20 30 20' fill='none' stroke='%23ff4fa3' stroke-width='12' stroke-linecap='round'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Unbounded:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --fundo: #f7f6f3;
@@ -28,7 +28,7 @@
     --borda: 2px solid var(--tinta);
     --sombra: 5px 5px 0 var(--tinta);
     --sans: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
-    --mao: "Caveat", "Comic Sans MS", cursive;
+    --mao: "Unbounded", "Helvetica Neue", Arial, sans-serif;
     color-scheme: light;
   }
   * { box-sizing: border-box; }
@@ -46,12 +46,12 @@
 
   /* Topo */
   header { min-height: 82vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 0 24px; }
-  .chapeu { font-family: var(--mao); font-size: 26px; color: var(--tinta-suave); transform: rotate(-2deg); }
+  .chapeu { font-family: var(--mao); font-size: 13px; letter-spacing: .02em; color: var(--tinta-suave); }
   h1 { font-weight: 800; font-size: clamp(96px, 24vw, 260px); line-height: .82; letter-spacing: -.055em; margin: 8px 0 18px; position: relative; }
   h1 .sublinha { position: absolute; left: -4%; right: -4%; bottom: -10%; width: 108%; height: 40%; overflow: visible; }
   h1 .sublinha path { fill: none; stroke: var(--rosa); stroke-width: 10; stroke-linecap: round; stroke-dasharray: 1400; stroke-dashoffset: 1400; animation: desenhar 1.4s .3s ease forwards; }
   @keyframes desenhar { to { stroke-dashoffset: 0; } }
-  .lema { max-width: 30ch; margin: 18px auto 34px; font-size: clamp(19px, 2.4vw, 24px); }
+  .lema { max-width: 36ch; margin: 18px auto 34px; font-size: clamp(19px, 2.4vw, 24px); }
   .lema b { background: var(--amarelo); padding: 0 4px; font-weight: 600; }
 
   .segura-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
@@ -62,8 +62,7 @@
     transition: transform .12s ease, box-shadow .12s ease, background .3s;
   }
   .segura:active, .segura.segurando { transform: translate(4px, 4px) scale(.96); box-shadow: 1px 1px 0 var(--tinta); }
-  .segura-dica { font-family: var(--mao); font-size: 24px; color: var(--tinta-suave); }
-  .seta { font-family: var(--mao); font-size: 22px; margin-top: 34px; color: var(--tinta-suave); animation: boia 2.4s ease-in-out infinite; }
+    .seta { font-family: var(--mao); font-size: 13px; margin-top: 34px; color: var(--tinta-suave); animation: boia 2.4s ease-in-out infinite; }
   @keyframes boia { 50% { transform: translateY(6px); } }
 
   .aviso-demo { margin: 0 auto 28px; max-width: 720px; padding: 10px 14px; border: 2px dashed var(--tinta); border-radius: 14px; background: var(--branco); font-size: 14px; text-align: center; }
@@ -84,7 +83,7 @@
   textarea::placeholder { color: #b5b2aa; }
   .linha-form { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; margin-top: 14px; }
   .campo { display: flex; flex-direction: column; gap: 4px; flex: 1 1 170px; }
-  .campo label { font-family: var(--mao); font-size: 21px; line-height: 1; }
+  .campo label { font-family: var(--mao); font-size: 12.5px; line-height: 1.2; }
   .campo input, .campo select {
     border: var(--borda); border-radius: 14px; background: var(--fundo); padding: 10px 12px; min-height: 46px; font-size: 16px;
   }
@@ -99,21 +98,21 @@
   .botao.claro { background: var(--branco); color: var(--tinta); box-shadow: 3px 3px 0 var(--tinta); }
   .botao.claro:hover { background: var(--verde); }
   .rodape-form { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 10px; min-height: 28px; }
-  .mensagem { margin: 0; font-family: var(--mao); font-size: 23px; line-height: 1.1; }
+  .mensagem { margin: 0; font-family: var(--mao); font-size: 13.5px; line-height: 1.3; }
   .contador { font-size: 13px; color: var(--tinta-suave); margin-left: auto; }
   .contador.alerta { color: var(--laranja); font-weight: 800; }
 
   /* Filtros */
   .barra { display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: center; justify-content: space-between; margin-bottom: 30px; }
   .titulo-acervo { font-weight: 800; font-size: clamp(36px, 6vw, 58px); letter-spacing: -.04em; margin: 0; line-height: 1; }
-  .titulo-acervo span { font-family: var(--mao); font-weight: 600; font-size: .5em; letter-spacing: 0; color: var(--tinta-suave); margin-left: 6px; }
-  .temas { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; }
+  .titulo-acervo span { font-family: var(--mao); font-weight: 400; font-size: 14px; letter-spacing: 0; color: var(--tinta-suave); margin-left: 6px; }
+  .temas { display: flex; flex-wrap: wrap; gap: 6px; width: 100%; }
   .tema {
-    border: var(--borda); border-radius: 999px; background: var(--branco); padding: 6px 14px; cursor: pointer; font-weight: 600; font-size: 15px;
+    border: var(--borda); border-radius: 999px; background: var(--branco); padding: 3px 10px; cursor: pointer; font-weight: 600; font-size: 13px;
     transition: transform .1s;
   }
   .tema:hover { transform: rotate(-2deg) scale(1.04); }
-  .tema[aria-pressed="true"] { background: var(--cor, var(--tinta)); color: var(--tinta); box-shadow: 3px 3px 0 var(--tinta); }
+  .tema[aria-pressed="true"] { background: var(--cor, var(--tinta)); color: var(--tinta); box-shadow: 2px 2px 0 var(--tinta); }
   .tema[data-tema="todas"][aria-pressed="true"] { background: var(--tinta); color: var(--branco); }
   .ordem { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
   .ordem select { border: var(--borda); border-radius: 999px; background: var(--branco); padding: 8px 12px; font-weight: 600; font-size: 15px; min-height: 42px; }
@@ -127,13 +126,13 @@
   }
   .brisa:hover, .brisa:focus-visible { transform: rotate(0) translate(-3px, -3px); box-shadow: 9px 9px 0 var(--cor, var(--tinta)); outline: none; }
   .brisa:focus-visible { outline: 3px solid var(--azul); outline-offset: 4px; }
-  .brisa-topo { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 13px; }
-  .chip { background: var(--cor); border: var(--borda); border-radius: 999px; padding: 2px 10px; font-weight: 600; }
-  .numero { font-family: var(--mao); font-size: 20px; color: var(--tinta-suave); }
+  .brisa-topo { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 11.5px; }
+  .chip { background: var(--cor); border: 1.5px solid var(--tinta); border-radius: 999px; padding: 1px 8px; font-weight: 600; }
+  .numero { font-family: var(--mao); font-size: 11.5px; color: var(--tinta-suave); }
   .brisa .texto { font-weight: 600; font-size: 23px; line-height: 1.15; letter-spacing: -.015em; flex: 1; }
   .brisa-pe { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; color: var(--tinta-suave); border-top: 2px dashed #dedbd3; padding-top: 10px; }
   .brisa-pe .juntos { color: var(--tinta); font-weight: 600; white-space: nowrap; }
-  .vazio { grid-column: 1 / -1; text-align: center; font-family: var(--mao); font-size: 30px; color: var(--tinta-suave); padding: 48px 0; }
+  .vazio { grid-column: 1 / -1; text-align: center; font-family: var(--mao); font-size: 17px; color: var(--tinta-suave); padding: 48px 0; }
 
   /* Ficha */
   dialog {
@@ -146,14 +145,14 @@
   .fechar { width: 44px; height: 44px; border-radius: 50%; border: var(--borda); background: var(--branco); cursor: pointer; font-size: 22px; line-height: 1; font-weight: 800; }
   .fechar:hover { background: var(--rosa); }
   .ficha h2 { font-weight: 800; font-size: clamp(30px, 5.4vw, 46px); line-height: 1.02; letter-spacing: -.035em; margin: 18px 0 10px; }
-  .coleta { font-family: var(--mao); font-size: 22px; color: var(--tinta-suave); margin-bottom: 26px; }
+  .coleta { font-family: var(--mao); font-size: 13px; color: var(--tinta-suave); margin-bottom: 26px; }
   .ramos { list-style: none; padding: 0; margin: 0 0 28px; display: flex; flex-direction: column; gap: 14px; }
   .ramos li { background: var(--branco); border: var(--borda); border-radius: 18px; padding: 12px 16px; margin-left: 24px; position: relative; }
   .ramos li::before { content: "↳"; position: absolute; left: -26px; top: 8px; font-weight: 800; font-size: 22px; }
   .ramos .tipo { display: inline-block; font-size: 13px; font-weight: 600; background: var(--cor, var(--amarelo)); border: var(--borda); border-radius: 999px; padding: 1px 10px; }
   .ramos p { margin: 8px 0 4px; font-weight: 600; font-size: 20px; line-height: 1.2; letter-spacing: -.01em; }
   .ramos small { color: var(--tinta-suave); font-size: 13px; }
-  .ramos-vazio { font-family: var(--mao); font-size: 25px; color: var(--tinta-suave); margin: 0 0 26px; }
+  .ramos-vazio { font-family: var(--mao); font-size: 15px; color: var(--tinta-suave); margin: 0 0 26px; }
   .junto { background: var(--branco); border: var(--borda); border-radius: 22px; padding: 20px; position: relative; margin-top: 12px; }
   .junto .adesivo { background: var(--verde); }
   .junto .ajuda { margin: 8px 0 14px; color: var(--tinta-suave); font-size: 16px; }
@@ -166,7 +165,39 @@
   .tipos input:focus-visible + span { outline: 3px solid var(--azul); outline-offset: 2px; }
   .junto textarea { font-size: 24px; min-height: 80px; }
 
-  footer { text-align: center; margin-top: 80px; font-family: var(--mao); font-size: 24px; color: var(--tinta-suave); }
+
+  /* Link para a página "por que brisar?" */
+  .nav-sobre {
+    position: absolute; top: 18px; right: 16px; z-index: 2; text-decoration: none; color: var(--tinta);
+    background: var(--branco); border: var(--borda); border-radius: 999px; padding: 6px 14px;
+    font-family: var(--mao); font-size: 12px; box-shadow: 3px 3px 0 var(--tinta); transition: transform .1s, box-shadow .1s, background .2s;
+  }
+  .nav-sobre:hover { background: var(--amarelo); }
+  .nav-sobre:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--tinta); }
+
+  /* Pop-up de pesquisa */
+  #pesquisa { width: min(520px, calc(100vw - 20px)); }
+  .pesquisa { padding: 28px 26px 24px; }
+  .pesquisa h2 { font-weight: 800; font-size: clamp(26px, 5vw, 34px); letter-spacing: -.03em; line-height: 1.05; margin: 0 0 6px; }
+  .pesquisa .intro { margin: 0 0 22px; color: var(--tinta-suave); font-size: 16px; }
+  .pesquisa fieldset { border: 0; padding: 0; margin: 0 0 20px; }
+  .pesquisa legend { font-weight: 600; font-size: 18px; line-height: 1.25; margin-bottom: 10px; padding: 0; }
+  .opcoes { display: flex; flex-wrap: wrap; gap: 8px; }
+  .opcoes label { cursor: pointer; position: relative; }
+  .opcoes input { position: absolute; opacity: 0; pointer-events: none; }
+  .opcoes span { display: inline-block; border: var(--borda); border-radius: 999px; padding: 7px 16px; font-weight: 600; font-size: 15px; background: var(--branco); transition: transform .1s; }
+  .opcoes span:hover { transform: rotate(-2deg); }
+  .opcoes input:checked + span { background: var(--amarelo); box-shadow: 3px 3px 0 var(--tinta); }
+  .opcoes input:focus-visible + span { outline: 3px solid var(--azul); outline-offset: 2px; }
+  .quanto { margin-top: 12px; }
+  .quanto[hidden] { display: none; }
+  .acoes { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: flex-end; margin-top: 8px; }
+  .link-discreto { background: none; border: 0; cursor: pointer; font-family: var(--mao); font-size: 12px; color: var(--tinta-suave); text-decoration: underline; padding: 8px; }
+  .obrigada { text-align: center; padding: 10px 0 4px; }
+  .obrigada p { color: var(--tinta-suave); margin: 0 0 18px; }
+
+  footer { text-align: center; margin-top: 80px; font-family: var(--mao); font-size: 13px; color: var(--tinta-suave); }
+  footer a { color: var(--tinta); }
 
   @media (max-width: 560px) {
     body { font-size: 17px; }
@@ -186,6 +217,7 @@
 <svg id="rabiscos" aria-hidden="true"></svg>
 
 <div class="pagina">
+  <a class="nav-sobre" href="sobre.html">por que brisar?</a>
   <header>
     <div class="chapeu">um acervo coletivo de perguntas sem resposta</div>
     <h1>brisas
@@ -193,10 +225,9 @@
         <path d="M10 60 C 120 20, 200 90, 300 55 S 480 20, 590 50 C 520 70, 380 85, 250 78"/>
       </svg>
     </h1>
-    <p class="lema">Aquela pergunta que aparece no banho, no trânsito, às 3 da manhã. <b>Solta ela aqui.</b> E se bater a de alguém, brisa junto.</p>
+    <p class="lema">são as perguntas que aparecem no meio do nada, no banho, no trânsito, ou às três da manhã, em plena insônia. <b>esse é o cantinho pra elas.</b> e, se ver alguma que te interesse, brisa junto.</p>
     <div class="segura-wrap">
-      <button class="segura" id="segura" type="button" aria-label="Segure para encher a tela de rabiscos">segura</button>
-      <span class="segura-dica">tá brisando também? segura aí</span>
+      <button class="segura" id="segura" type="button" aria-label="Segure para encher a tela de rabiscos">brisar</button>
     </div>
     <div class="seta">↓ rola pra soltar a sua</div>
   </header>
@@ -223,7 +254,7 @@
         <label for="site-pergunta">Não preencha</label>
         <input id="site-pergunta" tabindex="-1">
       </div>
-      <button class="botao" type="submit">soltar ✦</button>
+      <button class="botao" type="submit">brisar</button>
     </div>
     <div class="rodape-form">
       <p class="mensagem" id="msg-pergunta" role="status"></p>
@@ -247,7 +278,7 @@
 
   <section id="acervo" class="acervo" aria-live="polite"></section>
 
-  <footer>brisas · um hobby de malu lange</footer>
+  <footer>brisas · <a href="sobre.html">por que brisar?</a> · um hobby de malu lange</footer>
 </div>
 
 <dialog id="ficha" aria-labelledby="ficha-titulo">
@@ -275,7 +306,7 @@
           <label for="site-desd">Não preencha</label>
           <input id="site-desd" tabindex="-1">
         </div>
-        <button class="botao" type="submit">brisar ✦</button>
+        <button class="botao" type="submit">brisar</button>
       </div>
       <div class="rodape-form">
         <p class="mensagem" id="msg-desd" role="status"></p>
@@ -283,6 +314,44 @@
       </div>
     </form>
   </div>
+</dialog>
+
+<dialog id="pesquisa" aria-labelledby="pesquisa-titulo">
+  <form id="form-pesquisa" class="pesquisa" novalidate>
+    <div id="pesquisa-corpo">
+      <h2 id="pesquisa-titulo">brisa solta ✦</h2>
+      <p class="intro">Antes de você ir: duas perguntinhas rápidas sobre a experiência.</p>
+      <fieldset>
+        <legend>gostou da experiência de brisar?</legend>
+        <div class="opcoes">
+          <label><input type="radio" name="gostou" value="sim"><span>sim</span></label>
+          <label><input type="radio" name="gostou" value="nao_muito"><span>não muito</span></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>se tivesse um modelo de assinatura para receber brisas semanais no seu email, assinarias?</legend>
+        <div class="opcoes">
+          <label><input type="radio" name="assinaria" value="sim"><span>sim</span></label>
+          <label><input type="radio" name="assinaria" value="nao"><span>não</span></label>
+          <label><input type="radio" name="assinaria" value="depende"><span>depende do valor</span></label>
+        </div>
+        <div class="campo quanto" id="campo-quanto" hidden>
+          <label for="valor">quanto?</label>
+          <input id="valor" maxlength="60" placeholder="ex.: R$ 10 por mês">
+        </div>
+      </fieldset>
+      <p class="mensagem" id="msg-pesquisa" role="status"></p>
+      <div class="acoes">
+        <button type="button" class="link-discreto" id="pular-pesquisa">agora não</button>
+        <button type="submit" class="botao">enviar</button>
+      </div>
+    </div>
+    <div id="pesquisa-obrigada" class="obrigada" hidden>
+      <h2>valeu! ✦</h2>
+      <p>Sua resposta ajuda a decidir os próximos passos das brisas.</p>
+      <button type="button" class="botao claro" id="fechar-pesquisa">voltar pro acervo</button>
+    </div>
+  </form>
 </dialog>
 
 <script type="module">
@@ -405,7 +474,7 @@ function parar() {
   if (!timerSegura) return;
   clearInterval(timerSegura); timerSegura = null;
   segura.classList.remove("segurando");
-  segura.textContent = "segura";
+  segura.textContent = "brisar";
 }
 segura.addEventListener("pointerdown", comecar);
 ["pointerup", "pointerleave", "pointercancel"].forEach((ev) => segura.addEventListener(ev, parar));
@@ -602,10 +671,11 @@ $("#form-pergunta").addEventListener("submit", async (e) => {
     await inserir("perguntas", { texto, apelido: limpar($("#apelido-pergunta").value) || null, gaveta: $("#tema-pergunta").value });
     marcarEnvio();
     $("#texto-pergunta").value = ""; $("#texto-pergunta").dispatchEvent(new Event("input"));
-    msg.textContent = "Brisa solta no acervo ✦";
+    msg.textContent = "";
     rajada(9, centroDe(botao));
     ordem = "recentes"; $("#ordem").value = "recentes";
     await carregar();
+    abrirPesquisa();
   } catch (err) { console.error(err); msg.textContent = "Não rolou agora. Tenta de novo daqui a pouco?"; }
   finally { botao.disabled = false; }
 });
@@ -634,6 +704,55 @@ $("#form-desd").addEventListener("submit", async (e) => {
   } catch (err) { console.error(err); msg.textContent = "Não rolou agora. Tenta de novo daqui a pouco?"; }
   finally { botao.disabled = false; }
 });
+
+
+// ---------- Pesquisa pós-brisa ----------
+// Aparece depois de soltar uma brisa, até a pessoa responder uma vez.
+const pesquisa = $("#pesquisa");
+function abrirPesquisa() {
+  if (ler("brisas-pesquisa-respondida", false)) return;
+  $("#form-pesquisa").reset();
+  $("#campo-quanto").hidden = true;
+  $("#msg-pesquisa").textContent = "";
+  $("#pesquisa-corpo").hidden = false;
+  $("#pesquisa-obrigada").hidden = true;
+  setTimeout(() => { if (!ficha.open) pesquisa.showModal(); }, calmo ? 200 : 900);
+}
+$("#form-pesquisa").addEventListener("change", (e) => {
+  if (e.target.name === "assinaria") {
+    const depende = e.target.value === "depende";
+    $("#campo-quanto").hidden = !depende;
+    if (depende) $("#valor").focus();
+  }
+});
+$("#form-pesquisa").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const msg = $("#msg-pesquisa");
+  const gostou = e.target.querySelector("input[name=gostou]:checked")?.value;
+  const assinaria = e.target.querySelector("input[name=assinaria]:checked")?.value;
+  if (!gostou || !assinaria) { msg.textContent = "Marca uma opção em cada pergunta?"; return; }
+  const valor = assinaria === "depende" ? (limpar($("#valor").value) || null) : null;
+  const botao = e.target.querySelector("button[type=submit]");
+  botao.disabled = true; msg.textContent = "enviando…";
+  try {
+    if (sb) {
+      const { error } = await sb.from("pesquisa").insert({ gostou, assinaria, valor });
+      if (error) throw error;
+    } else {
+      demo.pesquisa = demo.pesquisa || [];
+      demo.pesquisa.push({ gostou, assinaria, valor, criada_em: new Date().toISOString() });
+      salvarDemo();
+    }
+    guardar("brisas-pesquisa-respondida", true);
+    $("#pesquisa-corpo").hidden = true;
+    $("#pesquisa-obrigada").hidden = false;
+    rajada(6, centroDe(pesquisa));
+  } catch (err) { console.error(err); msg.textContent = "Não rolou agora. Tenta de novo?"; }
+  finally { botao.disabled = false; }
+});
+$("#pular-pesquisa").addEventListener("click", () => pesquisa.close());
+$("#fechar-pesquisa").addEventListener("click", () => pesquisa.close());
+pesquisa.addEventListener("click", (e) => { if (e.target === pesquisa) pesquisa.close(); });
 
 // ---------- Controles ----------
 $("#ordem").addEventListener("change", (e) => { ordem = e.target.value; renderAcervo(); });
