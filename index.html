@@ -362,6 +362,7 @@
 // ============================================================
 const SUPABASE_URL = "https://ceyhuvnzzcognplujocx.supabase.co";   // ex.: "https://abcdefgh.supabase.co"
 const SUPABASE_KEY = "sb_publishable_8oH5NYqpnXNUhNowmhJ5BQ_KitjyYsh";   // a chave "publishable" (ou "anon public")
+const PESQUISA_ATIVA = false; // true = mostra o pop-up de pesquisa depois de brisar; false = desligado
 // ============================================================
 
 // As chaves (à esquerda) precisam bater com o banco; os rótulos podem mudar à vontade.
@@ -710,6 +711,7 @@ $("#form-desd").addEventListener("submit", async (e) => {
 // Aparece depois de soltar uma brisa, até a pessoa responder uma vez.
 const pesquisa = $("#pesquisa");
 function abrirPesquisa() {
+  if (!PESQUISA_ATIVA) return;
   if (ler("brisas-pesquisa-respondida", false)) return;
   $("#form-pesquisa").reset();
   $("#campo-quanto").hidden = true;
