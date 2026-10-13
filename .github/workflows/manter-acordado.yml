@@ -1,6 +1,5 @@
 # Visita o banco a cada 3 dias para o Supabase gratuito não pausar o projeto.
-# Precisa de dois "secrets" no repositório do GitHub:
-#   SUPABASE_URL  e  SUPABASE_KEY  (os mesmos valores colados no index.html)
+# Usa a mesma URL e a mesma chave pública que já estão no index.html.
 name: Manter as brisas acordadas
 
 on:
@@ -14,5 +13,10 @@ jobs:
     steps:
       - name: Ler uma pergunta
         run: |
-          curl --fail -sS "${{ secrets.SUPABASE_URL }}/rest/v1/perguntas?select=id&limit=1" \
-            -H "apikey: ${{ secrets.SUPABASE_KEY }}"
+          URL="https://ceyhuvnzzcognplujocx.supabase.co"
+          KEY="sb_publishable_8oH5NYqpnXNUhNowmhJ5BQ_KitjyYsh"
+          CODIGO=$(curl -sS -o resposta.txt -w "%{http_code}" "$URL/rest/v1/perguntas?select=id&limit=1" -H "apikey: $KEY" || true)
+          echo "Resposta do Supabase: $CODIGO"
+          cat resposta.txt 2>/dev/null; echo
+          if [ "$CODIGO" != "200" ]; then echo "ERRO: o Supabase não respondeu como esperado"; exit 1; fi
+          echo "Tudo certo: as brisas estão acordadas ✦"
